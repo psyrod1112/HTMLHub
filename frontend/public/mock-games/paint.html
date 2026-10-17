@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;height:100%;font-family:system-ui;overflow:hidden}#t{position:fixed;top:0;left:0;right:0;display:flex;gap:6px;padding:8px;background:#222;align-items:center}
+#t button{width:28px;height:28px;border:2px solid #fff;cursor:pointer}#t input{margin-left:8px}#clr{width:auto!important;padding:0 10px;background:#fff;font-weight:700}
+canvas{display:block;cursor:crosshair}
+</style></head><body><div id="t"></div><canvas id="c"></canvas><script>
+const c=document.getElementById('c'),x=c.getContext('2d'),t=document.getElementById('t');let col='#ff6a00',w=6,down=false,lx,ly;
+function fit(){c.width=innerWidth;c.height=innerHeight;x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height)}fit();addEventListener('resize',fit);
+['#ff6a00','#111','#e63946','#2a9d8f','#457b9d','#ffd166','#fff'].forEach(k=>{const b=document.createElement('button');b.style.background=k;b.onclick=()=>col=k;t.append(b)});
+const s=document.createElement('input');s.type='range';s.min=1;s.max=40;s.value=w;s.oninput=()=>w=+s.value;t.append(s);
+const cl=document.createElement('button');cl.id='clr';cl.textContent='지우기';cl.onclick=fit;t.append(cl);
+c.onpointerdown=e=>{down=true;lx=e.clientX;ly=e.clientY};onpointerup=()=>down=false;
+c.onpointermove=e=>{if(!down)return;x.strokeStyle=col;x.lineWidth=w;x.lineCap='round';x.beginPath();x.moveTo(lx,ly);x.lineTo(e.clientX,e.clientY);x.stroke();lx=e.clientX;ly=e.clientY};
+</script></body></html>

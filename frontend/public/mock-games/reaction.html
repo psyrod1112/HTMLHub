@@ -1,0 +1,11 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;height:100%;font-family:system-ui;user-select:none}
+#b{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:#2b2b35;cursor:pointer;text-align:center;transition:background .05s}
+h1{font-size:48px;margin:0 0 8px;font-style:italic}p{font-size:18px;opacity:.85;margin:0}
+</style></head><body><div id="b"><h1>반응속도 측정</h1><p>클릭해서 시작</p></div><script>
+let st='idle',to,t0,best=null;const b=document.getElementById('b');
+function set(bg,h,p){b.style.background=bg;b.innerHTML='<h1>'+h+'</h1><p>'+p+'</p>'}
+b.onclick=()=>{if(st=='idle'||st=='done'){st='wait';set('#c0392b','기다리세요...','주황색이 되면 클릭!');to=setTimeout(()=>{st='go';t0=performance.now();set('#ff6a00','지금!','클릭!!')},1200+Math.random()*2500)}
+else if(st=='wait'){clearTimeout(to);st='done';set('#2b2b35','너무 빨라요!','클릭해서 다시')}
+else if(st=='go'){const ms=Math.round(performance.now()-t0);best=best===null?ms:Math.min(best,ms);st='done';set('#2b2b35',ms+' ms','최고 기록 '+best+' ms · 클릭해서 다시')}}
+</script></body></html>

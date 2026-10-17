@@ -1,0 +1,10 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;height:100%;font-family:system-ui;background:linear-gradient(135deg,#fff3e8,#ffd9bd);display:flex;align-items:center;justify-content:center}
+.w{text-align:center}#n{font-size:56px;font-weight:900;color:#ff6a00;font-style:italic}#c{width:160px;height:160px;border:0;background:#ff6a00;color:#fff;font-size:22px;font-weight:800;cursor:pointer;clip-path:polygon(15% 0,100% 0,100% 85%,85% 100%,0 100%,0 15%);transition:transform .05s}
+#c:active{transform:scale(.94)}#u{margin-top:18px;padding:10px 16px;border:2px solid #ff6a00;background:#fff;font-weight:700;cursor:pointer}#u:disabled{opacity:.4}
+</style></head><body><div class="w"><div id="n">0</div><p id="r">초당 0</p><button id="c">CLICK</button><br><button id="u"></button></div><script>
+let n=0,ps=0,cost=10;const $=id=>document.getElementById(id);
+function r(){$('n').textContent=Math.floor(n).toLocaleString();$('r').textContent='초당 '+ps;$('u').textContent='자동 클리커 +1 ('+cost+')';$('u').disabled=n<cost}
+$('c').onclick=()=>{n++;r()};$('u').onclick=()=>{if(n>=cost){n-=cost;ps++;cost=Math.ceil(cost*1.5);r()}};
+setInterval(()=>{n+=ps/10;r()},100);r();
+</script></body></html>
