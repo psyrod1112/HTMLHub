@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;height:100%;background:#0b0b12;display:flex;align-items:center;justify-content:center;font-family:system-ui;color:#fff;overflow:hidden}
+canvas{background:#111;box-shadow:0 0 30px #ff6a0055;max-width:95vw;max-height:85vh}#s{position:fixed;top:10px;left:14px;font-weight:800}
+#m{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-size:22px;pointer-events:none}
+</style></head><body><div id="s">SCORE 0</div><div id="m">방향키 / 클릭해서 시작</div><canvas id="c" width="480" height="320"></canvas><script>
+const c=document.getElementById('c'),x=c.getContext('2d'),G=16,W=30,H=20;let sn,d,f,sc,run=false,t;
+function reset(){sn=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];d={x:1,y:0};sc=0;place();}
+function place(){f={x:Math.random()*W|0,y:Math.random()*H|0}}
+function step(){const h={x:(sn[0].x+d.x+W)%W,y:(sn[0].y+d.y+H)%H};if(sn.some(p=>p.x==h.x&&p.y==h.y)){run=false;clearInterval(t);m.textContent='GAME OVER - 클릭해서 다시';m.style.display='flex';return}
+sn.unshift(h);if(h.x==f.x&&h.y==f.y){sc++;place()}else sn.pop();draw()}
+function draw(){x.fillStyle='#111';x.fillRect(0,0,480,320);x.fillStyle='#ff6a00';x.shadowColor='#ff6a00';x.shadowBlur=12;sn.forEach(p=>x.fillRect(p.x*G+1,p.y*G+1,G-2,G-2));x.fillStyle='#3cf';x.shadowColor='#3cf';x.fillRect(f.x*G+3,f.y*G+3,G-6,G-6);x.shadowBlur=0;s.textContent='SCORE '+sc}
+function start(){if(run)return;reset();run=true;m.style.display='none';t=setInterval(step,90)}
+addEventListener('keydown',e=>{const k={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(!k)return;e.preventDefault();start();if(k[0]!=-d.x||k[1]!=-d.y)d={x:k[0],y:k[1]}});
+addEventListener('click',start);reset();draw();
+</script></body></html>
